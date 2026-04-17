@@ -61,7 +61,7 @@ const CATS = [
 async function callAI(systemPrompt, userMsg) {
   const prompt = `<s>[INST] <<SYS>>\n${systemPrompt}\n<</SYS>>\n\n${userMsg} [/INST]`;
   const res = await fetch(
-    "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3",
+    "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3/v1/chat/completions",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
