@@ -59,19 +59,22 @@ const CATS = [
 ];
 
 async function callAI(systemPrompt, userMsg) {
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 1000,
-      system: systemPrompt,
-      messages: [{ role: "user", content: userMsg }]
-    })
-  });
+  const prompt = `<s>[INST] <<SYS>>\n${systemPrompt}\n<</SYS>>\n\n${userMsg} [/INST]`;
+  const res = await fetch(
+    "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        inputs: prompt,
+        parameters: { max_new_tokens: 1200, temperature: 0.3, return_full_text: false }
+      })
+    }
+  );
   const data = await res.json();
-  if (data.error) throw new Error(data.error.message);
-  return data.content.map(b => b.text || "").join("");
+  if (data.error) throw new Error(data.error);
+  if (Array.isArray(data) && data[0]?.generated_text) return data[0].generated_text;
+  throw new Error("Модель загружается, попробуйте через 20 секунд");
 }
 
 function Spinner({ size = 20 }) {

@@ -1,33 +1,26 @@
-# Буровая Энциклопедия
+# DRILLPEDIA — Буровая Энциклопедия
+
+## Полностью бесплатно!
+Использует Hugging Face Inference API (бесплатный, без ключа).
 
 ## Деплой на Vercel
 
-### Способ 1 — через GitHub (рекомендуется)
+### Способ 1 — через GitHub
+1. Залей папку на GitHub (новый репозиторий)
+2. Зайди на vercel.com → New Project
+3. Импортируй репозиторий → Deploy
 
-1. Создай репозиторий на GitHub
-2. Загрузи все файлы этой папки
-3. Зайди на vercel.com → New Project
-4. Импортируй репозиторий — Vercel сам всё настроит
-
-### Способ 2 — через Vercel CLI
-
+### Способ 2 — Vercel CLI
 ```bash
 npm install
-npm run dev      # проверить локально
+npm run dev      # проверить локально на http://localhost:5173
 
 npm install -g vercel
 vercel login
-vercel           # деплой
+vercel
 ```
 
-### ⚠️ Важно: API ключ Anthropic
-
-Приложение использует Anthropic Claude API.
-На Vercel добавь переменную окружения:
-
-  VITE_ANTHROPIC_API_KEY=sk-ant-...
-
-Settings → Environment Variables → Add
-
-> Или временно можно захардкодить ключ в src/DrillingEncyclopedia.jsx
-> в функции callAI в заголовок Authorization.
+## ⚠️ Особенности Hugging Face бесплатного API
+- Модель может "спать" — первый запрос займёт 20–30 сек
+- Лимит: ~1000 бесплатных запросов/день
+- Если нужно больше — зарегистрируйся на huggingface.co и добавь токен
